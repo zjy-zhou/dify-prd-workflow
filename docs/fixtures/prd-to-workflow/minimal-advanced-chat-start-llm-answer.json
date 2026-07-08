@@ -1,0 +1,142 @@
+{
+  "nodes": [
+    {
+      "id": "start",
+      "type": "custom",
+      "position": {
+        "x": 80,
+        "y": 280
+      },
+      "positionAbsolute": {
+        "x": 80,
+        "y": 280
+      },
+      "width": 244,
+      "height": 100,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "type": "start",
+        "title": "Start",
+        "desc": "",
+        "selected": false,
+        "variables": [
+          {
+            "variable": "query",
+            "label": "Query",
+            "type": "paragraph",
+            "required": true,
+            "max_length": 4096,
+            "options": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm",
+      "type": "custom",
+      "position": {
+        "x": 400,
+        "y": 280
+      },
+      "positionAbsolute": {
+        "x": 400,
+        "y": 280
+      },
+      "width": 244,
+      "height": 100,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "type": "llm",
+        "title": "LLM",
+        "desc": "",
+        "selected": false,
+        "model": {
+          "provider": "__PROVIDER__",
+          "name": "__MODEL__",
+          "mode": "chat",
+          "completion_params": {
+            "temperature": 0.7
+          }
+        },
+        "prompt_template": [
+          {
+            "role": "system",
+            "text": "You are a helpful assistant."
+          },
+          {
+            "role": "user",
+            "text": "Answer the user query:\n\n{{#start.query#}}"
+          }
+        ],
+        "context": {
+          "enabled": false,
+          "variable_selector": []
+        },
+        "vision": {
+          "enabled": false
+        }
+      }
+    },
+    {
+      "id": "answer",
+      "type": "custom",
+      "position": {
+        "x": 720,
+        "y": 280
+      },
+      "positionAbsolute": {
+        "x": 720,
+        "y": 280
+      },
+      "width": 244,
+      "height": 100,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "type": "answer",
+        "title": "Answer",
+        "desc": "",
+        "selected": false,
+        "variables": [],
+        "answer": "{{#llm.text#}}"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "start-source-llm-target",
+      "source": "start",
+      "target": "llm",
+      "type": "custom",
+      "sourceHandle": "source",
+      "targetHandle": "target",
+      "data": {
+        "sourceType": "start",
+        "targetType": "llm",
+        "isInIteration": false,
+        "isInLoop": false
+      }
+    },
+    {
+      "id": "llm-source-answer-target",
+      "source": "llm",
+      "target": "answer",
+      "type": "custom",
+      "sourceHandle": "source",
+      "targetHandle": "target",
+      "data": {
+        "sourceType": "llm",
+        "targetType": "answer",
+        "isInIteration": false,
+        "isInLoop": false
+      }
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.7
+  }
+}
